@@ -1,16 +1,14 @@
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
+public class CameraFollow : MonoBehaviour {
+    Vector3 offset;
+    public Camera main;
+
+    void Start() {
+        offset = main.transform.position - transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+        main.transform.position = transform.position + offset;
     }
 }
