@@ -40,7 +40,8 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ArcadeFlightController : MonoBehaviour {
+public class ArcadeFlightController : MonoBehaviour
+{
     Rigidbody plane;
 
     [Header("Movement Settings")]
@@ -57,13 +58,15 @@ public class ArcadeFlightController : MonoBehaviour {
 
     float currentSpeed;
 
-    void Awake() {
+    void Awake()
+    {
         plane = GetComponent<Rigidbody>();
         plane.useGravity = false; // arcade planes fly freely
         currentSpeed = minSpeed;
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         HandleThrottle();
         HandleRotation();
         MovePlane();
@@ -72,14 +75,16 @@ public class ArcadeFlightController : MonoBehaviour {
             ApplyAutoLeveling();
     }
 
-    void HandleThrottle() {
+    void HandleThrottle()
+    {
         if (Input.GetKey(KeyCode.Space))
             currentSpeed = Mathf.Min(currentSpeed + acceleration * Time.fixedDeltaTime, maxSpeed);
         else if (Input.GetKey(KeyCode.LeftShift))
             currentSpeed = Mathf.Max(currentSpeed - deceleration * Time.fixedDeltaTime, minSpeed);
     }
 
-    void HandleRotation() {
+    void HandleRotation()
+    {
         float pitch = 0f;
         float yaw = 0f;
         float roll = 0f;
@@ -101,12 +106,14 @@ public class ArcadeFlightController : MonoBehaviour {
         transform.Rotate(rotation * Time.fixedDeltaTime, Space.Self);
     }
 
-    void MovePlane() {
+    void MovePlane()
+    {
         // Constant forward motion
         plane.linearVelocity = -transform.forward * currentSpeed;
     }
 
-    void ApplyAutoLeveling() {
+    void ApplyAutoLeveling()
+    {
         // Auto-stabilize roll and pitch gradually
         Vector3 localRot = transform.localEulerAngles;
         if (localRot.x > 180) localRot.x -= 360;
@@ -119,7 +126,8 @@ public class ArcadeFlightController : MonoBehaviour {
         transform.Rotate(pitchCorrection, 0f, rollCorrection, Space.Self);
     }
 
-    void Update() {
+    void Update()
+    {
         Debug.Log($"Speed: {currentSpeed:F1} m/s");
     }
 }
